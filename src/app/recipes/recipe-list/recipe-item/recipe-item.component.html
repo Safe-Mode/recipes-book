@@ -1,9 +1,13 @@
-<div class="recipe d-flex align-items-center">
-  <div class="recipe__left mr-4">
-    <img [src]="recipe.imagePath" style="max-height: 56px;" [alt]="recipe.name">
+<div class="recipe">
+  <div class="float-right ml-4">
+    <img
+      [src]="recipe.imagePath"
+      class="img-fluid"
+      style="max-height: 56px;"
+      [alt]="recipe.name">
   </div>
 
-  <div class="recipe__right">
+  <div>
     <h3>{{ recipe.name }}</h3>
     <p>{{ recipe.description }}</p>
   </div>
