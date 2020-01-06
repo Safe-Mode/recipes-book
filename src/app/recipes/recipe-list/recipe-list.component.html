@@ -10,9 +10,10 @@
       <a
         href="#"
         class="list-group-item list-group-item-action"
-        *ngFor="let recipe of recipes"
+        *ngFor="let item of recipes"
+        (click)="onRecipeLinkClick(item)"
       >
-        <app-recipe-item [recipe]="recipe"></app-recipe-item>
+        <app-recipe-item [recipe]="item"></app-recipe-item>
       </a>
     </div>
   </div>
