@@ -1,23 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-  @Output() viewSelected = new EventEmitter<string>();
+export class HeaderComponent {
 
-  currentLink = 'recipes';
-
-  constructor() { }
-
-  ngOnInit() {
-    this.viewSelected.emit(this.currentLink);
+  constructor(private router: Router) {
   }
 
-  onNavLinkClicked(link: string) {
-    this.currentLink = link;
-    this.viewSelected.emit(this.currentLink);
-  }
 }

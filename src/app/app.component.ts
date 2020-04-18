@@ -7,9 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'recipes-book';
-  view: string;
-
-  onViewSelected(linkName: string) {
-    this.view = linkName;
-  }
 }
