@@ -1,13 +1,9 @@
 import {
   Directive,
-  Input,
   ElementRef,
-  TemplateRef,
-  ViewContainerRef,
   HostBinding,
   HostListener,
-  OnInit,
-  ViewChild
+  OnInit
 } from '@angular/core';
 
 @Directive({

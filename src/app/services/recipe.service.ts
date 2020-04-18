@@ -9,38 +9,39 @@ export class RecipeService {
 
   private recipes: Recipe[] = [
     new Recipe(
-      'Touchdown Chili',
-      'Every year when football season rolls around and the weather begins to cool, my husband requests I make this hearty, beanless chili. It receives rave reviews from everyone.',
-      'https://images.media-allrecipes.com/userphotos/600x600/5583115.jpg',
+      'Kimchi Fried Rice with Frizzled Eggs',
+      // tslint:disable-next-line:max-line-length
+      'This easy, lightning-fast fried rice is a great way to introduce kimchi to your family--mixed with rice, spinach, and eggs, its spicy nature is tempered. Make sure your pan is thoroughly pre-heated before you add any ingredients. This will help keep the cook time quick, but also produces a proper fried rice.',
+      '../../assets/images/kimchi-fried-rice-with-frizzled-eggs.jpg',
       [
-        new Ingredient('2 pounds ground beef', 2),
-        new Ingredient('1 large onion, chopped', 1),
-        new Ingredient('6 cloves garlic, chopped', 6),
-        new Ingredient('1/3 cup chili powder', 0),
-        new Ingredient('1 1/2 teaspoons ground cumin', 1),
-        new Ingredient('1 1/2 teaspoons dried basil', 1),
-        new Ingredient('1 (28 ounce) can diced tomatoes with juice', 1),
-        new Ingredient('1 (4 ounce) can diced green chile peppers, drained', 1)
+        new Ingredient('toasted sesame oil', '1 1/2 tablespoons'),
+        new Ingredient('chopped green onions', '1 cup'),
+        new Ingredient('garlic, minced', '2 cloves'),
+        new Ingredient('chopped kimchi, drained', '3/4 cup'),
+        new Ingredient('juice reserved', '1/4 cup'),
+        new Ingredient('UNCLE BEN\'S® READY RICE® Jasmine', '2 (8.8 ounce) pouches'),
+        new Ingredient('package fresh baby spinach', '1 (5 ounce)'),
+        new Ingredient('reduced-sodium soy sauce', '1 1/2 tablespoons'),
+        new Ingredient('gochujang (Korean hot pepper paste)', '2 teaspoons'),
+        new Ingredient('sesame oil', '2 teaspoons'),
+        new Ingredient('eggs', 4)
       ]
     ),
     new Recipe(
-      'Restaurant-Style Buffalo Chicken Wings',
-      'This is similar to the hot wings recipe served at a popular restaurant chain. If you have ever had them, you have to love them.',
-      'https://images.media-allrecipes.com/userphotos/4614563.jpg',
+      'Tuna Melts',
+      'Delicious melted cheesy tuna sandwiches.',
+      '../../assets/images/tuna-melts.jpg',
       [
-        new Ingredient('½ cup all-purpose flour', 0),
-        new Ingredient('¼ teaspoon paprika', 0),
-        new Ingredient('¼ teaspoon cayenne pepper', 0),
-        new Ingredient('¼ teaspoon salt', 0),
-        new Ingredient('10 chicken wings', 10),
-        new Ingredient('oil for deep frying', 1),
-        new Ingredient('¼ cup butter', 0),
-        new Ingredient('¼ cup hot sauce', 0)
+        new Ingredient('loaf French bread', '1 (1 pound)'),
+        new Ingredient('small sweet onion, peeled and diced', 1),
+        new Ingredient('can tuna, drained', '1 (12 ounce)'),
+        new Ingredient('mozzarella cheese, shredded', '2 cups'),
+        new Ingredient('mayonnaise', '1 cup')
       ]
     )
   ];
 
-  getRecipes() {
+  getRecipes(): Recipe[] {
     return this.recipes.slice();
   }
 }
