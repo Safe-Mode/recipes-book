@@ -4,13 +4,6 @@
   </div>
 
   <div class="col-md-7">
-    <app-recipe-detail
-      *ngIf="selectedRecipe; else emptyRecipe;"
-      [recipe]="selectedRecipe"
-    ></app-recipe-detail>
-
-    <ng-template #emptyRecipe>
-      <p class="text-center">Recipe is not selected yet...</p>
-    </ng-template>
+    <router-outlet></router-outlet>
   </div>
 </div>

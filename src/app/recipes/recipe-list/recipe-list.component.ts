@@ -19,8 +19,4 @@ export class RecipeListComponent implements OnInit {
     this.recipes = this.recipeService.getRecipes();
   }
 
-  onRecipeLinkClick(recipe: Recipe) {
-    this.recipeService
-      .recipeSelected.emit(recipe);
-  }
 }
