@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { Ingredient } from '../../models/ingredient.model';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -17,9 +16,10 @@ export class RecipeEditComponent implements OnInit {
   editMode = false;
   recipeId: string;
   recipeForm: FormGroup;
-  recipes: Recipe[]
+  recipes: Recipe[];
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private recipeService: RecipeService
   ) { }
@@ -70,12 +70,26 @@ export class RecipeEditComponent implements OnInit {
     this.addIngredient(null);
   }
 
+  onDeleteIngredient(index: number): void {
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
+  }
+
+  navigateBack(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
   onSubmit(): void {
     if (this.editMode) {
       this.recipeService.editRecipe(this.recipeId, this.recipeForm.value);
     } else {
       this.recipeService.addRecipe(this.recipeForm.value);
     }
+
+    this.navigateBack();
+  }
+
+  onCancel(): void {
+    this.navigateBack();
   }
 
 }

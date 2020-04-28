@@ -12,6 +12,7 @@ import { RecipeService } from '../../services/recipe.service';
 })
 export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
+  recipeId: string;
 
   constructor(
     private router: Router,
@@ -22,11 +23,12 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: Params) => {
-      this.recipe = this.recipeService.getRecipe(params.get('id'));
+      this.recipeId = params.get('id');
+      this.recipe = this.recipeService.getRecipe(this.recipeId);
     });
   }
 
-  addIngredientsToShoppingList(event: Event): void {
+  onAddIngredientsToShoppingList(event: Event): void {
     event.preventDefault();
 
     const shoppingListIngredients = this.shoppingListService.getIngredients();
@@ -39,9 +41,16 @@ export class RecipeDetailComponent implements OnInit {
     }
   }
 
-  editRecipe(event: Event): void {
+  onEditRecipe(event: Event): void {
     event.preventDefault();
     this.router.navigate(['edit'], { relativeTo: this.route });
+  }
+
+  onDeleteRecipe(event: Event): void {
+    event.preventDefault();
+
+    this.recipeService.deleteRecipe(this.recipeId);
+    this.router.navigate(['/recipes']);
   }
 
   getImagePath(): string {

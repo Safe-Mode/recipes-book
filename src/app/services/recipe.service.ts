@@ -63,6 +63,11 @@ export class RecipeService {
     this.recipesChanged.next(this.recipes.slice());
   }
 
+  deleteRecipe(id: string): void {
+    this.recipes.splice(+id, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
   getRecipeImage(recipe: Recipe): string {
     return (recipe.imagePath) ? recipe.imagePath : this.noImagePath;
   }
