@@ -5,6 +5,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { Ingredient } from '../../models/ingredient.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -16,6 +17,7 @@ export class RecipeEditComponent implements OnInit {
   editMode = false;
   recipeId: string;
   recipeForm: FormGroup;
+  recipes: Recipe[]
 
   constructor(
     private route: ActivatedRoute,
@@ -69,7 +71,11 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.recipeForm);
+    if (this.editMode) {
+      this.recipeService.editRecipe(this.recipeId, this.recipeForm.value);
+    } else {
+      this.recipeService.addRecipe(this.recipeForm.value);
+    }
   }
 
 }

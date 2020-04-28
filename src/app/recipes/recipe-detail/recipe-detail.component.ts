@@ -44,4 +44,8 @@ export class RecipeDetailComponent implements OnInit {
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
 
+  getImagePath(): string {
+    return this.recipeService.getRecipeImage(this.recipe);
+  }
+
 }

@@ -1,8 +1,16 @@
+import { Subject } from 'rxjs';
+
 import { Recipe } from '../models/recipe.model';
 import { Ingredient } from '../models/ingredient.model';
 
+const NO_IMAGE_PATH = '../../assets/images/no-image.png';
 
 export class RecipeService {
+
+  recipesChanged = new Subject<Recipe[]>();
+
+  private noImagePath = NO_IMAGE_PATH;
+
   private recipes: Recipe[] = [
     new Recipe(
       'Kimchi Fried Rice with Frizzled Eggs',
@@ -44,4 +52,19 @@ export class RecipeService {
   getRecipe(id: string): Recipe {
     return this.recipes[id];
   }
+
+  addRecipe(recipe: Recipe): void {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  editRecipe(id: string, recipe: Recipe): void {
+    this.recipes[id] = recipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  getRecipeImage(recipe: Recipe): string {
+    return (recipe.imagePath) ? recipe.imagePath : this.noImagePath;
+  }
+
 }
