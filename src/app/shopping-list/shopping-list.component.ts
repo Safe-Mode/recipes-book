@@ -10,6 +10,7 @@ import { ShoppingListService } from '../services/shopping-list.service';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
+
   private shoppingListChangedSub: Subscription;
   ingredients: Ingredient[];
 
@@ -29,4 +30,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.shoppingListChangedSub.unsubscribe();
   }
+
+  onEditIngredient(index: number): void {
+    this.shoppingListService.ingredientEdited.next(index);
+  }
+
 }

@@ -6,7 +6,8 @@
       <button
         type="button"
         class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-        *ngFor="let ingredient of ingredients"
+        *ngFor="let ingredient of ingredients; index as i"
+        (click)="onEditIngredient(i)"
       >
         {{ ingredient.name }}
         <span class="badge badge-secondary badge-pill">{{ ingredient.amount }}</span>

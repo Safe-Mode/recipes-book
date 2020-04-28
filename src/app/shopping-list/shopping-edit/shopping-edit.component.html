@@ -1,23 +1,61 @@
-<form class="mb-4">
+<form
+  class="mb-4"
+  (ngSubmit)="onSubmit(form)"
+  #form="ngForm"
+>
   <div class="form-row">
     <div class="form-group col-10">
       <label for="title">Title</label>
-      <input type="text" class="form-control" id="title" #titleInput>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="name"
+        ngModel
+        required
+      >
     </div>
 
     <div class="form-group col-2">
-      <label for="amout">Amount</label>
-      <input type="number" class="form-control" id="amount" #amountInput>
+      <label for="amount">Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        id="amount"
+        name="amount"
+        ngModel
+        required
+        pattern="^[1-9]+[0-9]*$"
+      >
     </div>
   </div>
 
-  <div class="btn-group" role="group" aria-label="Form controls">
+  <div
+    class="btn-group"
+    role="group"
+    aria-label="Form controls"
+  >
     <button
       type="submit"
       class="btn btn-success"
-      (click)="onAddIngredientBtnClick()"
-    >Add</button>
-    <button type="button" class="btn btn-danger">Delete</button>
-    <button type="button" class="btn btn-secondary">Clear</button>
+      [disabled]="!form.valid"
+    >
+      {{ (editMode) ? 'Edit' : 'Add' }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="onDelete()"
+      *ngIf="editMode"
+    >
+      Delete
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="onClear()"
+    >
+      Clear
+    </button>
   </div>
 </form>
