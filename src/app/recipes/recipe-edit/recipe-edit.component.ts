@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { Ingredient } from '../../models/ingredient.model';
-import { log } from 'util';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -32,29 +31,33 @@ export class RecipeEditComponent implements OnInit {
   }
 
   private initForm(): void {
+    const { required } = Validators;
     const recipe = (this.editMode) ? this.recipeService
       .getRecipe(this.recipeId) : new Recipe('', '', '', []);
 
     this.recipeForm = new FormGroup({
-      name: new FormControl(recipe.name),
+      name: new FormControl(recipe.name, required),
       description: new FormControl(recipe.description),
       imagePath: new FormControl(recipe.imagePath),
-      ingredients: new FormArray([])
+      ingredients: new FormArray([], required)
     });
 
     if (recipe.ingredients.length) {
       recipe.ingredients.forEach((ingredient: Ingredient ) => {
         this.addIngredient(ingredient);
       });
+    } else {
+      this.addIngredient(null);
     }
   }
 
   addIngredient(ingredient: Ingredient | null): void {
     const name = (ingredient) ? ingredient.name : '';
     const amount = (ingredient) ? ingredient.amount : '';
+    const { required } = Validators;
 
     const formGroup = new FormGroup({
-      name: new FormControl(name),
+      name: new FormControl(name, required),
       amount: new FormControl(amount)
     });
 
