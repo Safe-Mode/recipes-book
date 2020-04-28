@@ -1,1 +1,53 @@
-<p>recipe-edit works!</p>
+<form>
+  <div class="row mb-3">
+    <div class="col">
+      <div class="btn-group">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="button" class="btn btn-danger">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label for="img-url">Image URL:</label>
+        <input type="text" class="form-control" id="img-url">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label for="desc">Description:</label>
+        <textarea class="form-control" id="desc" rows="6"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8">
+      <input type="text" class="form-control">
+    </div>
+
+    <div class="col-2">
+      <input type="number" class="form-control">
+    </div>
+
+    <div class="col-2">
+      <button class="btn btn-danger">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</form>
