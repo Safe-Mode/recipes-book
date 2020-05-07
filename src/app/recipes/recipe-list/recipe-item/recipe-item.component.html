@@ -8,6 +8,7 @@
   </div>
 
   <div>
-    <h4>{{ recipe.name }}</h4>
+    <h4>{{ recipe.name | shorten:strLength.recipeName }}</h4>
+    <p>{{ recipe.description | shorten:strLength.recipeDesc }}</p>
   </div>
 </div>
