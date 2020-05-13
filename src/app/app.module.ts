@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { BASE_URL_TOKEN } from './config';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
@@ -17,6 +19,7 @@ import { RecipeEmptyComponent } from './recipes/recipe-empty/recipe-empty.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeService } from './services/recipe.service';
 import { ShortenPipe } from './shared/shorten.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -37,11 +40,16 @@ import { ShortenPipe } from './shared/shorten.pipe';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [
     ShoppingListService,
-    RecipeService
+    RecipeService,
+    {
+      provide: BASE_URL_TOKEN,
+      useValue: environment.baseUrl
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -12,7 +12,9 @@ import {
 export class DropdownDirective implements OnInit {
   @HostBinding('class.show') isShown: boolean;
 
-  @HostListener('click', ['$event.target']) onClick(element: Element) {
+  @HostListener('click', ['$event']) onClick(event: Event) {
+    event.preventDefault();
+
     this.isShown = !this.isShown;
     this
       .elementRef
