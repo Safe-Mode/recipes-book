@@ -52,8 +52,9 @@
     </button>
     <button
       type="button"
-      class="btn btn-secondary"
+      class="btn btn-dark"
       (click)="onClear()"
+      [disabled]="!shoppingListForm.form.controls['name']?.value && !shoppingListForm.form.controls['amount']?.value"
     >
       Clear
     </button>

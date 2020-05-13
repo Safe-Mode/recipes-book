@@ -7,10 +7,10 @@ const NO_IMAGE_PATH = '../../assets/images/no-image.png';
 
 export class RecipeService {
 
-  recipesChanged = new Subject<Recipe[]>();
-
   private noImagePath = NO_IMAGE_PATH;
   private recipes: Recipe[] = [];
+
+  recipesChanged = new Subject<Recipe[]>();
 
   // private recipes: Recipe[] = [
   //   new Recipe(
