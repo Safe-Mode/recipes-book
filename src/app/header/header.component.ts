@@ -21,7 +21,10 @@ export class HeaderComponent {
 
   onFetchData(event: Event): void {
     event.preventDefault();
-    this.dataStorageService.fetchRecipes();
+
+    this.dataStorageService
+      .fetchRecipes()
+      .subscribe();
   }
 
 }
