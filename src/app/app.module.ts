@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { BASE_URL_TOKEN } from './config';
+import { API_KEY_TOKEN, AUTH_URL_TOKEN, BASE_URL_TOKEN } from './config';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -20,6 +20,7 @@ import { RecipeEditComponent } from './pages/recipes/recipe-edit/recipe-edit.com
 import { RecipeService } from './services/recipe.service';
 import { ShortenPipe } from './shared/shorten.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthComponent } from './pages/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     DropdownDirective,
     RecipeEmptyComponent,
     RecipeEditComponent,
-    ShortenPipe
+    ShortenPipe,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,15 @@ import { HttpClientModule } from '@angular/common/http';
     RecipeService,
     {
       provide: BASE_URL_TOKEN,
-      useValue: environment.baseUrl
+      useValue: environment.url.base
+    },
+    {
+      provide: AUTH_URL_TOKEN,
+      useValue: environment.url.auth
+    },
+    {
+      provide: API_KEY_TOKEN,
+      useValue: environment.apiKey
     }
   ],
   bootstrap: [AppComponent]

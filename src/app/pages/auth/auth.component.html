@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12 col-md-6 m-auto">
+    <p class="alert alert-danger" *ngIf="error">{{ error }}</p>
+
+    <div class="text-center" *ngIf="isLoading">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <form #authForm="ngForm" (ngSubmit)="onAuthFormSubmit(authForm)" [ngClass]="(isLoading) ? 'd-none' : 'd-block'">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" ngModel name="email" required>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" ngModel name="password" required minlength="6">
+      </div>
+
+      <button type="submit" class="btn btn-success mr-1"
+              [disabled]="!authForm.valid">{{ (isLoginMode) ? 'Log In' : 'Sign Up' }}</button>
+      <button type="button" class="btn btn-secondary"
+              (click)="switchMode();">{{ (isLoginMode) ? 'Sign Up' : 'Log In' }}</button>
+    </form>
+  </div>
+</div>
