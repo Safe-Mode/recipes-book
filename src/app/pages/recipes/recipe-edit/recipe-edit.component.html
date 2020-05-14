@@ -90,9 +90,12 @@
         [formArrayName]="i"
       >
         <div class="col-8 form-group">
+          <label class="sr-only" [for]="'ingredient-name-' + i">Ingredient#{{ i + 1 }} name</label>
+
           <input
             type="text"
             class="form-control"
+            [id]="'ingredient-name-' + i"
             formControlName="name"
             [ngClass]="{'is-invalid': !ingredientCtrl.get('name').valid && ingredientCtrl.get('name').touched}"
           >
@@ -105,10 +108,13 @@
         </div>
 
         <div class="col-3 form-group">
+          <label class="sr-only" [for]="'ingredient-amount-' + i">Ingredient#{{ i + 1 }} amount</label>
+
           <input
             type="text"
             class="form-control"
             formControlName="amount"
+            [id]="'ingredient-amount-' + i"
           >
         </div>
 

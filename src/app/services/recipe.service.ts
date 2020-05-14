@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
 
-import { Recipe } from '../models/recipe.model';
-import { Ingredient } from '../models/ingredient.model';
+import { Recipe } from '../shared/models/recipe.model';
+import { Ingredient } from '../shared/models/ingredient.model';
 
 const NO_IMAGE_PATH = '../../assets/images/no-image.png';
 
@@ -15,8 +15,9 @@ export class RecipeService {
   // private recipes: Recipe[] = [
   //   new Recipe(
   //     'Kimchi Fried Rice with Frizzled Eggs',
-  //     // tslint:disable-next-line:max-line-length
-  //     'This easy, lightning-fast fried rice is a great way to introduce kimchi to your family--mixed with rice, spinach, and eggs, its spicy nature is tempered. Make sure your pan is thoroughly pre-heated before you add any ingredients. This will help keep the cook time quick, but also produces a proper fried rice.',
+  //     'This easy, lightning-fast fried rice is a great way to introduce kimchi to your family--mixed with rice, \n' +
+  //     'spinach, and eggs, its spicy nature is tempered. Make sure your pan is thoroughly pre-heated before you add any \n' +
+  //     'ingredients. This will help keep the cook time quick, but also produces a proper fried rice.',
   //     '../../assets/images/kimchi-fried-rice-with-frizzled-eggs.jpg',
   //     [
   //       new Ingredient('toasted sesame oil', '1 1/2 tablespoons'),

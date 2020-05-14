@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { BASE_URL_TOKEN } from '../config';
-import { Recipe } from '../models/recipe.model';
+import { Recipe } from './models/recipe.model';
 import { RecipeService } from '../services/recipe.service';
 
 @Injectable({

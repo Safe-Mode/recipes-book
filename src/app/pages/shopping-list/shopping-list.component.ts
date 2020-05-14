@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { Ingredient } from '../models/ingredient.model';
-import { ShoppingListService } from '../services/shopping-list.service';
+import { Ingredient } from '../../shared/models/ingredient.model';
+import { ShoppingListService } from '../../services/shopping-list.service';
 
 @Component({
   selector: 'app-shopping-list',

@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Recipe } from '../../models/recipe.model';
-import { RecipeService } from '../../services/recipe.service';
-import { DataStorageService } from '../../shared/data-storage.service';
+import { Recipe } from '../../../shared/models/recipe.model';
+import { RecipeService } from '../../../services/recipe.service';
+import { DataStorageService } from '../../../shared/data-storage.service';
 
 @Component({
   selector: 'app-recipe-list',
