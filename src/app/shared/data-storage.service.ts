@@ -29,8 +29,7 @@ export class DataStorageService {
   }
 
   fetchRecipes(): Observable<Recipe[]> {
-    return this.http
-      .get<Recipe[]>(`${this.baseUrl}recipes.json`)
+    return this.http.get<Recipe[]>(`${this.baseUrl}recipes.json`)
       .pipe(
         map((recipes: Recipe[]) => {
           return recipes.map((recipe: Recipe) => {

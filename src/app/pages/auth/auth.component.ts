@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { AuthResponseData, AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -15,7 +16,10 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error = null;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -40,6 +44,7 @@ export class AuthComponent implements OnInit {
           this.error = null;
           this.isLoading = false;
           form.reset();
+          this.router.navigate(['/']);
         },
         (errorMessage: string) => {
           console.log(errorMessage);

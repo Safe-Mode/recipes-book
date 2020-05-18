@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { API_KEY_TOKEN, AUTH_URL_TOKEN } from '../config';
+import { User } from '../models/user.model';
 
 enum ErrorMessage {
   EMAIL_EXISTS = 'This email is already exists',
@@ -26,6 +27,8 @@ export interface AuthResponseData {
 })
 export class AuthService {
 
+  user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+
   constructor(
     @Inject(AUTH_URL_TOKEN)
     private authUrl: string,
@@ -40,6 +43,12 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
+  private handleAuth({ localId, email, idToken, expiresIn }: AuthResponseData): void {
+    const expDateStamp = new Date().getTime() + +expiresIn * 1000;
+    const user = new User(email, localId, idToken, new Date(expDateStamp));
+    this.user$.next(user);
+  }
+
   signUpUser(email: string, password: string): Observable<AuthResponseData> {
     return this.http
       .post<AuthResponseData>(
@@ -47,7 +56,8 @@ export class AuthService {
         { email, password, returnSecureToken: true }
       )
       .pipe(
-        catchError(AuthService.handleError)
+        catchError(AuthService.handleError),
+        tap((resData: AuthResponseData) => this.handleAuth(resData))
       );
   }
 
@@ -58,7 +68,8 @@ export class AuthService {
         { email, password, returnSecureToken: true }
       )
       .pipe(
-        catchError(AuthService.handleError)
+        catchError(AuthService.handleError),
+        tap((resData: AuthResponseData) => this.handleAuth(resData))
       );
   }
 }
