@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -34,7 +35,8 @@ export class AuthService {
     private authUrl: string,
     @Inject(API_KEY_TOKEN)
     private apiKey: string,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
   }
 
@@ -72,4 +74,10 @@ export class AuthService {
         tap((resData: AuthResponseData) => this.handleAuth(resData))
       );
   }
+
+  logOutUser(): void {
+    this.user$.next(null);
+    this.router.navigate(['/auth']);
+  }
+
 }
