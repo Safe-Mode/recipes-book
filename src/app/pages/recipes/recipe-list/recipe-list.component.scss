@@ -1,7 +1,9 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+
 .list-group-item {
   &.active {
-    color: #495057;
-    background-color: transparentize(#28a745, 0.95);
-    border-color: transparentize(#28a745, 0.7);
+    color: $dark;
+    background-color: transparentize($success, 0.95);
+    border-color: transparentize($success, 0.7);
   }
 }
