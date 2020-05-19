@@ -11,19 +11,30 @@
     <form #authForm="ngForm" (ngSubmit)="onAuthFormSubmit(authForm)" [ngClass]="(isLoading) ? 'd-none' : 'd-block'">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" ngModel name="email" required>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" ngModel name="email"
+               #email="ngModel"
+               [ngClass]="{ 'is-invalid': email.touched && !email.valid, 'is-valid': email.touched && email.valid }"
+               required>
+
+        <small id="emailHelp" class="form-text text-muted" *ngIf="!email.touched || email.valid">We'll never share your
+          email with anyone else.</small>
+        <p class="invalid-feedback" *ngIf="email.touched && !email.valid">Please enter valid email</p>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" ngModel name="password" required minlength="6">
+        <input type="password" class="form-control" id="password" ngModel name="password" #password="ngModel"
+               [ngClass]="{ 'is-invalid': password.touched && !password.valid, 'is-valid': password.touched && password.valid }"
+               required minlength="6">
+
+        <p class="invalid-feedback" *ngIf="password.touched && !password.valid">Password should contain at least 6
+          symbols</p>
       </div>
 
       <button type="submit" class="btn btn-success mr-1"
-              [disabled]="!authForm.valid">{{ (isLoginMode) ? 'Log In' : 'Sign Up' }}</button>
+              [disabled]="!authForm.valid">{{ (isLoginMode) ? 'Login' : 'Sign Up' }}</button>
       <button type="button" class="btn btn-secondary"
-              (click)="switchMode();">{{ (isLoginMode) ? 'Sign Up' : 'Log In' }}</button>
+              (click)="switchMode();">{{ (isLoginMode) ? 'Sign Up' : 'Login' }}</button>
     </form>
   </div>
 </div>
