@@ -7,6 +7,8 @@ import { catchError, tap } from 'rxjs/operators';
 import { API_KEY_TOKEN, AUTH_URL_TOKEN } from '../config';
 import { User } from '../models/user.model';
 
+const MS_PER_SEC = 1000;
+
 enum ErrorMessage {
   EMAIL_EXISTS = 'This email is already exists',
   EMAIL_NOT_FOUND = 'This email does not exists. You need to sign up',
@@ -47,7 +49,7 @@ export class AuthService {
   }
 
   private handleAuth({ localId, email, idToken, expiresIn }: AuthResponseData): void {
-    const expDateStamp = new Date().getTime() + +expiresIn * 1000;
+    const expDateStamp = new Date().getTime() + +expiresIn * MS_PER_SEC;
     const user = new User(email, localId, idToken, new Date(expDateStamp));
 
     this.user$.next(user);

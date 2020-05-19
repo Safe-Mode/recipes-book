@@ -8,12 +8,14 @@ import { RecipeDetailComponent } from './pages/recipes/recipe-detail/recipe-deta
 import { RecipeEditComponent } from './pages/recipes/recipe-edit/recipe-edit.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { RecipesResolverService } from './services/recipes-resolver.service';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
   {
     path: 'recipes',
     component: RecipesComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', component: RecipeEmptyComponent },
       { path: 'new', component: RecipeEditComponent },
@@ -21,7 +23,7 @@ const routes: Routes = [
       { path: ':id/edit', component: RecipeEditComponent, resolve: [RecipesResolverService] }
     ]
   },
-  { path: 'shopping-list', component: ShoppingListComponent },
+  { path: 'shopping-list', canActivate: [AuthGuard], component: ShoppingListComponent },
   { path: 'auth', component: AuthComponent }
 ];
 
@@ -30,4 +32,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
