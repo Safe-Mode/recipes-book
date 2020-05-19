@@ -43,7 +43,6 @@ export class AuthComponent implements OnInit {
           console.log(response);
           this.error = null;
           this.isLoading = false;
-          form.reset();
           this.router.navigate(['/']);
         },
         (errorMessage: string) => {

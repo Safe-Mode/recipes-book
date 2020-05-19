@@ -28,6 +28,7 @@ export interface AuthResponseData {
 })
 export class AuthService {
 
+  private userExpTimer: any;
   user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
   constructor(
@@ -48,7 +49,10 @@ export class AuthService {
   private handleAuth({ localId, email, idToken, expiresIn }: AuthResponseData): void {
     const expDateStamp = new Date().getTime() + +expiresIn * 1000;
     const user = new User(email, localId, idToken, new Date(expDateStamp));
+
     this.user$.next(user);
+    localStorage.setItem('userData', JSON.stringify(user));
+    this.autoLogOut(expDateStamp);
   }
 
   signUpUser(email: string, password: string): Observable<AuthResponseData> {
@@ -76,8 +80,33 @@ export class AuthService {
   }
 
   logOutUser(): void {
+    localStorage.removeItem('userData');
+    clearTimeout(this.userExpTimer);
+    this.userExpTimer = null;
     this.user$.next(null);
     this.router.navigate(['/auth']);
+  }
+
+  autoLogIn(): void {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    if (!userData) {
+      return;
+    }
+
+    const expDate = new Date(userData._tokenExpDate);
+    const user: User = new User(userData.email, userData.id, userData._token, expDate);
+
+    if (user.token) {
+      const expDurationStamp = expDate.getTime() - new Date().getTime();
+
+      this.user$.next(user);
+      this.autoLogOut(expDurationStamp);
+    }
+  }
+
+  autoLogOut(expDateStamp: number): void {
+    this.userExpTimer = setTimeout(() => this.logOutUser(), expDateStamp);
   }
 
 }
