@@ -22,6 +22,7 @@ import { RecipeEmptyComponent } from './pages/recipes/recipe-empty/recipe-empty.
 import { RecipeEditComponent } from './pages/recipes/recipe-edit/recipe-edit.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LogoComponent } from './shared/components/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AppRoutingModule } from './app-routing.module';
     RecipeEmptyComponent,
     RecipeEditComponent,
     ShortenPipe,
-    AuthComponent
+    AuthComponent,
+    LogoComponent
   ],
   imports: [
     BrowserModule,

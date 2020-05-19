@@ -1,0 +1,7 @@
+.list-group-item {
+  &.active {
+    color: #495057;
+    background-color: transparentize(#28a745, 0.95);
+    border-color: transparentize(#28a745, 0.7);
+  }
+}
