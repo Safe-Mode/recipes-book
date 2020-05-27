@@ -23,6 +23,7 @@ import { RecipeEditComponent } from './pages/recipes/recipe-edit/recipe-edit.com
 import { AuthComponent } from './pages/auth/auth.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LogoComponent } from './shared/components/logo/logo.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { LogoComponent } from './shared/components/logo/logo.component';
     RecipeEditComponent,
     ShortenPipe,
     AuthComponent,
-    LogoComponent
+    LogoComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
