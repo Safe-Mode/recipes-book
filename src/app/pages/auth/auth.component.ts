@@ -51,6 +51,7 @@ export class AuthComponent implements OnDestroy {
 
   switchMode(): void {
     this.isLoginMode = !this.isLoginMode;
+    this.error = null;
   }
 
   onAuthFormSubmit(form: NgForm): void {
@@ -70,7 +71,7 @@ export class AuthComponent implements OnDestroy {
         },
         (errorMessage: string) => {
           this.error = errorMessage;
-          this.showErrorModal(errorMessage);
+          // this.showErrorModal(errorMessage);
           this.isLoading = false;
         }
       );
