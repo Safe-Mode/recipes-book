@@ -33,6 +33,17 @@
           symbols</p>
       </div>
 
+      <div class="form-group" *ngIf="!isLoginMode">
+        <label for="password-repeat">Repeat Password</label>
+        <input type="password" class="form-control" id="password-repeat" ngModel name="password-repeat"
+               #passwordRepeat="ngModel"
+               [ngClass]="{ 'is-invalid': passwordRepeat.touched && !passwordRepeat.valid, 'is-valid': passwordRepeat.touched && passwordRepeat.valid }"
+               required [appEqualPassword]="password">
+
+        <p class="invalid-feedback" *ngIf="passwordRepeat.touched && !passwordRepeat.valid">Passwords should be
+          equal</p>
+      </div>
+
       <div class="d-flex">
         <button type="submit" class="btn btn-success mr-1"
                 [disabled]="!authForm.valid">{{ (isLoginMode) ? 'Login' : 'Sign Up' }}</button>

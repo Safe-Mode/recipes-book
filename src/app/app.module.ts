@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NG_VALIDATORS, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { API_KEY_TOKEN, AUTH_URL_TOKEN, BASE_URL_TOKEN } from './config';
@@ -25,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LogoComponent } from './shared/components/logo/logo.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { DynamicCmpHostDirective } from './shared/directives/dynamic-cmp-host.directive';
+import { EqualPasswordValidatorDirective } from './shared/directives/equal-password.directive';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { DynamicCmpHostDirective } from './shared/directives/dynamic-cmp-host.di
     AuthComponent,
     LogoComponent,
     ModalComponent,
-    DynamicCmpHostDirective
+    DynamicCmpHostDirective,
+    EqualPasswordValidatorDirective
   ],
   imports: [
     BrowserModule,
