@@ -44,7 +44,8 @@ export class AuthService {
   }
 
   private static handleError({ error }): Observable<AuthResponseData> {
-    const errorMessage = (!error || !error.error) ? ErrorMessage.DEFAULT : ErrorMessage[error.error.message];
+    const isUnknownError = !error || !error.error || !ErrorMessage[error.error.message];
+    const errorMessage = (isUnknownError) ? ErrorMessage.DEFAULT : ErrorMessage[error.error.message];
     return throwError(errorMessage);
   }
 

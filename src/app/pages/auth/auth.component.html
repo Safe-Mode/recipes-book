@@ -1,6 +1,8 @@
+<ng-template appDynamicCmpHost></ng-template>
+
 <div class="row">
   <div class="col-12 col-md-6 m-auto">
-    <p class="alert alert-danger" *ngIf="error">{{ error }}</p>
+    <!--    <p class="alert alert-danger" *ngIf="error">{{ error }}</p>-->
 
     <div class="text-center" *ngIf="isLoading">
       <div class="spinner-border" role="status">
@@ -31,10 +33,12 @@
           symbols</p>
       </div>
 
-      <button type="submit" class="btn btn-success mr-1"
-              [disabled]="!authForm.valid">{{ (isLoginMode) ? 'Login' : 'Sign Up' }}</button>
-      <button type="button" class="btn btn-secondary"
-              (click)="switchMode();">{{ (isLoginMode) ? 'Sign Up' : 'Login' }}</button>
+      <div class="d-flex">
+        <button type="submit" class="btn btn-success mr-1"
+                [disabled]="!authForm.valid">{{ (isLoginMode) ? 'Login' : 'Sign Up' }}</button>
+        <button type="button" class="btn btn-outline-secondary ml-auto"
+                (click)="switchMode();">{{ (isLoginMode) ? 'Sign Up' : 'Login' }}</button>
+      </div>
     </form>
   </div>
 </div>

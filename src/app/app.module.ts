@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 import { ShoppingListService } from './services/shopping-list.service';
 import { RecipeService } from './services/recipe.service';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
-import { DropdownDirective } from './shared/dropdown.directive';
+import { DropdownDirective } from './shared/directives/dropdown.directive';
 import { ShortenPipe } from './shared/shorten.pipe';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -24,6 +24,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LogoComponent } from './shared/components/logo/logo.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
+import { DynamicCmpHostDirective } from './shared/directives/dynamic-cmp-host.directive';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     ShortenPipe,
     AuthComponent,
     LogoComponent,
-    ModalComponent
+    ModalComponent,
+    DynamicCmpHostDirective
   ],
   imports: [
     BrowserModule,
@@ -71,6 +73,7 @@ import { ModalComponent } from './shared/components/modal/modal.component';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }
