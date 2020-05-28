@@ -2,9 +2,13 @@ import { Subject } from 'rxjs';
 
 import { Recipe } from '../shared/models/recipe.model';
 import { Ingredient } from '../shared/models/ingredient.model';
+import { Injectable } from '@angular/core';
 
 const NO_IMAGE_PATH = '../../assets/images/no-image.png';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class RecipeService {
 
   private noImagePath = NO_IMAGE_PATH;
