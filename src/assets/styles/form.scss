@@ -1,0 +1,28 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+
+.form__eye {
+  transition: color, 0.2s;
+}
+
+.form__control {
+  position: relative;
+
+  .form__eye {
+    position: absolute;
+    top: 50%;
+    right: calc(1.5em + .75rem);
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none;
+      color: $success
+    }
+
+    &:active {
+      opacity: 0.7;
+    }
+  }
+}

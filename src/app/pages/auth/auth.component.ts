@@ -10,7 +10,7 @@ import { DynamicCmpHostDirective } from '../../shared/directives/dynamic-cmp-hos
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnDestroy {
 
@@ -21,6 +21,8 @@ export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error = null;
+  isTypePassword = true;
+  isRepeatTypePassword = true;
 
   constructor(
     private authService: AuthService,
