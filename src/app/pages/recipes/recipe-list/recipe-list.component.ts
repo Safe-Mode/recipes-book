@@ -15,6 +15,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   private recipesSub: Subscription;
   private recipesChangedSub: Subscription;
+
   recipes: Recipe[];
 
   constructor(
@@ -31,7 +32,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
         this.recipes = recipes;
       });
 
-    this.recipesChangedSub = this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
+    this.recipesChangedSub = this.recipeService.recipesChanged$.subscribe((recipes: Recipe[]) => {
       this.recipes = recipes;
     });
   }

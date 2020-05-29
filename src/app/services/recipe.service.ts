@@ -14,7 +14,7 @@ export class RecipeService {
   private noImagePath = NO_IMAGE_PATH;
   private recipes: Recipe[] = [];
 
-  recipesChanged = new Subject<Recipe[]>();
+  recipesChanged$ = new Subject<Recipe[]>();
 
   // private recipes: Recipe[] = [
   //   new Recipe(
@@ -52,7 +52,7 @@ export class RecipeService {
   // ];
 
   private updateRecipes(): void {
-    this.recipesChanged.next(this.recipes.slice());
+    this.recipesChanged$.next(this.recipes.slice());
   }
 
   setRecipes(recipes: Recipe[]): void {

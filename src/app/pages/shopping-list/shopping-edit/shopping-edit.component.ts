@@ -24,7 +24,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit() {
-    this.editIngredientSub = this.shoppingListService.ingredientEdited
+    this.editIngredientSub = this.shoppingListService.ingredientEdited$
       .subscribe((index: number) => {
         this.editMode = true;
         this.editedIngredientIndex = index;

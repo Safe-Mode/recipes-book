@@ -34,7 +34,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSaveData(event: Event): void {
     event.preventDefault();
+
     this.dataStorageService.storeRecipes();
+    this.dataStorageService.storeIngredients();
   }
 
   onFetchData(event: Event): void {
@@ -42,6 +44,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.dataStorageService
       .fetchRecipes()
+      .subscribe();
+
+    this.dataStorageService
+      .fetchIngredients()
       .subscribe();
   }
 

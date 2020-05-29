@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Recipe } from '../../../shared/models/recipe.model';
+import { Ingredient } from '../../../shared/models/ingredient.model';
 import { ShoppingListService } from '../../../services/shopping-list.service';
 import { RecipeService } from '../../../services/recipe.service';
 
@@ -32,13 +33,17 @@ export class RecipeDetailComponent implements OnInit {
     event.preventDefault();
 
     const shoppingListIngredients = this.shoppingListService.getIngredients();
-    const containsIngredient = shoppingListIngredients.some((listIngredient) => {
-      return this.recipe.ingredients.some(ingredient => ingredient.name === listIngredient.name);
+    const clonedIngredients = this.recipe.ingredients.slice();
+
+    shoppingListIngredients.forEach((listIngredient: Ingredient) => {
+      clonedIngredients.forEach((ingredient: Ingredient) => {
+         if (ingredient.name === listIngredient.name) {
+           clonedIngredients.splice(clonedIngredients.indexOf(ingredient), 1);
+         }
+      });
     });
 
-    if (!containsIngredient) {
-      this.shoppingListService.addIngredients(this.recipe.ingredients);
-    }
+    this.shoppingListService.addIngredients(clonedIngredients);
   }
 
   onEditRecipe(event: Event): void {
