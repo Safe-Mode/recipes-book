@@ -86,7 +86,7 @@
 
       <div
         class="form-row"
-        *ngFor="let ingredientCtrl of recipeForm.get('ingredients').controls; index as i"
+        *ngFor="let ingredientCtrl of ingredientsControls; index as i"
         [formArrayName]="i"
       >
         <div class="col-8 form-group">

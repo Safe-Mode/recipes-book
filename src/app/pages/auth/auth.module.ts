@@ -4,13 +4,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AuthComponent } from './auth.component';
 import { SharedModule } from '../../shared/shared.module';
+import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [AuthComponent],
   imports: [
     FormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    AuthRoutingModule
   ]
 })
 export class AuthModule {

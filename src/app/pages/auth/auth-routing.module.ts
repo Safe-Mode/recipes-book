@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { NotAuthGuard } from '../../guards/not-auth.guard';
 import { AuthComponent } from './auth.component';
 
 const routes: Routes = [
-  { path: 'auth', component: AuthComponent }
+  { path: '', component: AuthComponent, canActivate: [NotAuthGuard] }
 ];
 
 @NgModule({

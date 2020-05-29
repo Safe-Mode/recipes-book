@@ -9,11 +9,11 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class NotAuthGuard implements CanActivate {
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
   }
 
@@ -21,8 +21,7 @@ export class AuthGuard implements CanActivate {
     return this.authService.user$.pipe(
       take(1),
       map((user: User) => {
-        // TODO: enhance functionality for 'auth' page against valid user
-        return (user) ? true : this.router.createUrlTree(['/auth']);
+        return (user) ? this.router.createUrlTree(['/']) : true;
       })
     );
   }

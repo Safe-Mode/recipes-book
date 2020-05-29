@@ -50,4 +50,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logOutUser();
   }
 
+  isUrlEqualTo(url: string): boolean {
+    return this.router.url === url;
+  }
+
 }
