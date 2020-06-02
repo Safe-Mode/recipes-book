@@ -3,9 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { API_KEY_TOKEN, AUTH_URL_TOKEN } from '../config';
 import { User } from '../models/user.model';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from '../store/auth/auth.actions';
 
 const MS_PER_SEC = 1000;
 
@@ -31,7 +34,7 @@ export interface AuthResponseData {
 export class AuthService {
 
   private userExpTimer: any;
-  user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  // user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
   constructor(
     @Inject(AUTH_URL_TOKEN)
@@ -39,7 +42,8 @@ export class AuthService {
     @Inject(API_KEY_TOKEN)
     private apiKey: string,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private store: Store<fromApp.AppState>
   ) {
   }
 
@@ -53,7 +57,12 @@ export class AuthService {
     const expDateStamp = new Date().getTime() + +expiresIn * MS_PER_SEC;
     const user = new User(email, localId, idToken, new Date(expDateStamp));
 
-    this.user$.next(user);
+    // Managing state via rxjs
+    // this.user$.next(user);
+
+    // Managing state via ngRx
+    this.store.dispatch(new AuthActions.Login({ localId, email, idToken, expiresIn: new Date(expDateStamp) }))
+
     localStorage.setItem('userData', JSON.stringify(user));
     this.autoLogOut(expDateStamp);
   }
@@ -86,7 +95,13 @@ export class AuthService {
     localStorage.removeItem('userData');
     clearTimeout(this.userExpTimer);
     this.userExpTimer = null;
-    this.user$.next(null);
+
+    // Managing state via rxjs
+    // this.user$.next(null);
+
+    // Manging state via ngRx
+    this.store.dispatch(new AuthActions.Logout());
+
     this.router.navigate(['/auth']);
   }
 
@@ -103,7 +118,17 @@ export class AuthService {
     if (user.token) {
       const expDurationStamp = expDate.getTime() - new Date().getTime();
 
-      this.user$.next(user);
+      // Managing state via rxjs
+      // this.user$.next(user);
+
+      // Managing state via ngRx
+      this.store.dispatch(new AuthActions.Login({
+        idToken: userData._token,
+        email: userData.email,
+        localId: userData.id,
+        expiresIn: userData.expDate
+      }));
+
       this.autoLogOut(expDurationStamp);
     }
   }
