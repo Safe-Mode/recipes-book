@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { Recipe } from '../../../shared/models/recipe.model';
 import { Ingredient } from '../../../shared/models/ingredient.model';
 import { ShoppingListService } from '../../../services/shopping-list.service';
 import { RecipeService } from '../../../services/recipe.service';
+import * as ShoppingListActions from '../../../store/shopping-list/shopping-list.actions';
+import * as fromApp from '../../../store/app.reducer';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -19,7 +22,8 @@ export class RecipeDetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private shoppingListService: ShoppingListService,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private store: Store<fromApp.AppState>
   ) { }
 
   ngOnInit() {
@@ -43,7 +47,11 @@ export class RecipeDetailComponent implements OnInit {
       });
     });
 
-    this.shoppingListService.addIngredients(clonedIngredients);
+    // Managing state via rxjs
+    // this.shoppingListService.addIngredients(clonedIngredients);
+
+    // Managing state via ngRx
+    this.store.dispatch(new ShoppingListActions.AddIngredients(clonedIngredients));
   }
 
   onEditRecipe(event: Event): void {

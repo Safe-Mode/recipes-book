@@ -8,15 +8,13 @@ import { Ingredient } from '../shared/models/ingredient.model';
 })
 export class ShoppingListService {
 
-  private ingredients: Ingredient[];
+  private ingredients: Ingredient[] = [
+    new Ingredient('Cucumbers', 2),
+    new Ingredient('Tomatoes', 3)
+  ];
 
   ingredientsChanged$ = new Subject<Ingredient[]>();
   ingredientEdited$ = new Subject<number>();
-
-  // private ingredients: Ingredient[] = [
-  //   new Ingredient('Cucumbers', 2),
-  //   new Ingredient('Tomatoes', 3)
-  // ];
 
   private updateIngredients(): void {
     this.ingredientsChanged$.next(this.ingredients.slice());
