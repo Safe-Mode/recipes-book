@@ -13,8 +13,7 @@ export function AuthReducer(state: State = initialState, action: AuthActions.Aut
   switch (action.type) {
     case AuthActions.LOGIN:
       const { payload: { idToken, email, localId, expiresIn } } = action;
-
-      const user = new User(idToken, email, localId, expiresIn);
+      const user = new User(email, localId, idToken, expiresIn);
 
       return {
         ...state,

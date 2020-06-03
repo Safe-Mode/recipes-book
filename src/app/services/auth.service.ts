@@ -61,7 +61,7 @@ export class AuthService {
     // this.user$.next(user);
 
     // Managing state via ngRx
-    this.store.dispatch(new AuthActions.Login({ localId, email, idToken, expiresIn: new Date(expDateStamp) }))
+    this.store.dispatch(new AuthActions.Login({ localId, email, idToken, expiresIn: new Date(expDateStamp) }));
 
     localStorage.setItem('userData', JSON.stringify(user));
     this.autoLogOut(expDateStamp);
@@ -126,7 +126,7 @@ export class AuthService {
         idToken: userData._token,
         email: userData.email,
         localId: userData.id,
-        expiresIn: userData.expDate
+        expiresIn: expDate
       }));
 
       this.autoLogOut(expDurationStamp);
