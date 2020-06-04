@@ -15,13 +15,14 @@ const initialState: State = {
 
 export function AuthReducer(state: State = initialState, action: AuthActions.AuthAction) {
   switch (action.type) {
+    case AuthActions.SIGN_UP_START:
     case AuthActions.LOGIN_START:
       return {
         ...state,
         authError: null,
         isLoading: true
       };
-    case AuthActions.LOGIN:
+    case AuthActions.AUTH_SUCCESS:
       const { payload: { idToken, email, localId, expiresIn } } = action;
       const user = new User(email, localId, idToken, expiresIn);
 
@@ -35,12 +36,17 @@ export function AuthReducer(state: State = initialState, action: AuthActions.Aut
         ...state,
         user: null
       };
-    case AuthActions.LOGIN_FAIL:
+    case AuthActions.AUTH_FAIL:
       return {
         ...state,
         user: null,
         authError: action.payload,
         isLoading: false
+      };
+    case AuthActions.CLEAR_ERROR:
+      return {
+        ...state,
+        authError: null
       };
     default:
       return state;

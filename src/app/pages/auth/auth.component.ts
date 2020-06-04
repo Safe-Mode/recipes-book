@@ -71,6 +71,9 @@ export class AuthComponent implements OnInit, OnDestroy {
   switchMode(): void {
     this.isLoginMode = !this.isLoginMode;
     this.error = null;
+
+    // Managing state via ngRx
+    this.store.dispatch(new AuthActions.ClearError());
   }
 
   onAuthFormSubmit(form: NgForm): void {
@@ -98,7 +101,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       // );
 
       // Managing state via ngRx
-      this.store.dispatch(new AuthActions.LoginStart({ email, password }));
+      const authEffect = (this.isLoginMode) ? 'LoginStart' : 'SignUpStart';
+      this.store.dispatch(new AuthActions[authEffect]({ email, password }));
     }
   }
 

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
@@ -21,6 +21,22 @@ const MS_PER_SEC = 1000;
 @Injectable()
 export class AuthEffects {
   @Effect()
+  signUp$ = this.actions$.pipe(
+    ofType(AuthActions.SIGN_UP_START),
+    switchMap(({ payload: { email, password } }: AuthActions.SignUpStart) => {
+      return this.http
+        .post<AuthResponseData>(
+          `${this.authUrl}accounts:signUp?key=${this.apiKey}`,
+          { email, password, returnSecureToken: true }
+        )
+        .pipe(
+          map((authData: AuthResponseData) => this.handleAuth(authData)),
+          catchError(({ error }: HttpErrorResponse) => this.handleError(error))
+        );
+    })
+  );
+
+  @Effect()
   login$ = this.actions$.pipe(
     ofType(AuthActions.LOGIN_START),
     switchMap(({ payload: { email, password } }: AuthActions.LoginStart) => {
@@ -30,22 +46,8 @@ export class AuthEffects {
           { email, password, returnSecureToken: true }
         )
         .pipe(
-          map((authData: AuthResponseData) => {
-            const expDateStamp = new Date().getTime() + +authData.expiresIn * MS_PER_SEC;
-
-            return new AuthActions.Login({
-              localId: authData.localId,
-              idToken: authData.idToken,
-              email: authData.email,
-              expiresIn: new Date(expDateStamp)
-            });
-          }),
-          catchError(({ error }: HttpErrorResponse) => {
-            const isUnknownError = !error || !error.error || !ErrorMessage[error.error.message];
-            const errorMessage = (isUnknownError) ? ErrorMessage.DEFAULT : ErrorMessage[error.error.message];
-
-            return of(new AuthActions.LoginFail(errorMessage));
-          })
+          map((authData: AuthResponseData) => this.handleAuth(authData)),
+          catchError(({ error }: HttpErrorResponse) => this.handleError(error))
         );
     })
   );
@@ -54,7 +56,7 @@ export class AuthEffects {
     dispatch: false
   })
   loginSuccess$ = this.actions$.pipe(
-    ofType(AuthActions.LOGIN),
+    ofType(AuthActions.AUTH_SUCCESS),
     tap(() => {
       this.router.navigate(['/']);
     })
@@ -69,5 +71,23 @@ export class AuthEffects {
     private http: HttpClient,
     private router: Router
   ) {
+  }
+
+  private handleAuth({ expiresIn, localId, idToken, email }: AuthResponseData): AuthActions.AuthSuccess {
+    const expDateStamp = new Date().getTime() + +expiresIn * MS_PER_SEC;
+
+    return new AuthActions.AuthSuccess({
+      localId,
+      idToken,
+      email,
+      expiresIn: new Date(expDateStamp)
+    });
+  }
+
+  private handleError(error): Observable<AuthActions.AuthFail> {
+    const isUnknownError = !error || !error.error || !ErrorMessage[error.error.message];
+    const errorMessage = (isUnknownError) ? ErrorMessage.DEFAULT : ErrorMessage[error.error.message];
+
+    return of(new AuthActions.AuthFail(errorMessage));
   }
 }

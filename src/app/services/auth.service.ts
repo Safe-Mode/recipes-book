@@ -61,7 +61,7 @@ export class AuthService {
     // this.user$.next(user);
 
     // Managing state via ngRx
-    this.store.dispatch(new AuthActions.Login({ localId, email, idToken, expiresIn: new Date(expDateStamp) }));
+    this.store.dispatch(new AuthActions.AuthSuccess({ localId, email, idToken, expiresIn: new Date(expDateStamp) }));
 
     localStorage.setItem('userData', JSON.stringify(user));
     this.autoLogOut(expDateStamp);
@@ -122,7 +122,7 @@ export class AuthService {
       // this.user$.next(user);
 
       // Managing state via ngRx
-      this.store.dispatch(new AuthActions.Login({
+      this.store.dispatch(new AuthActions.AuthSuccess({
         idToken: userData._token,
         email: userData.email,
         localId: userData.id,
