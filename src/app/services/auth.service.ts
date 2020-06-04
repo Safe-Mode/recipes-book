@@ -34,7 +34,7 @@ export interface AuthResponseData {
 export class AuthService {
 
   private userExpTimer: any;
-  // user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
   constructor(
     @Inject(AUTH_URL_TOKEN)
@@ -95,13 +95,7 @@ export class AuthService {
     localStorage.removeItem('userData');
     clearTimeout(this.userExpTimer);
     this.userExpTimer = null;
-
-    // Managing state via rxjs
-    // this.user$.next(null);
-
-    // Manging state via ngRx
-    this.store.dispatch(new AuthActions.Logout());
-
+    this.user$.next(null);
     this.router.navigate(['/auth']);
   }
 
@@ -137,4 +131,18 @@ export class AuthService {
     this.userExpTimer = setTimeout(() => this.logOutUser(), expDateStamp);
   }
 
+  /* For managing state via ngRx */
+
+  setLogoutTimer(expDateStamp: number): void {
+    this.userExpTimer = setTimeout(() => {
+      this.store.dispatch(new AuthActions.Logout());
+    }, expDateStamp);
+  }
+
+  clearLogoutTimer(): void {
+    if (this.userExpTimer) {
+      clearTimeout(this.userExpTimer);
+      this.userExpTimer = null;
+    }
+  }
 }

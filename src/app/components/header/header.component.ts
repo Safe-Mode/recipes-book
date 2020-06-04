@@ -9,6 +9,7 @@ import { DataStorageService } from '../../shared/data-storage.service';
 import { AuthService } from '../../services/auth.service';
 import * as fromApp from '../../store/app.reducer';
 import * as fromAuth from '../../store/auth/auth.reducer';
+import * as AuthActions from '../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -70,7 +71,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogOut(event: Event): void {
     event.preventDefault();
-    this.authService.logOutUser();
+
+    // Manging state via rxjs
+    // this.authService.logOutUser();
+
+    // Manging state via ngRx
+    this.store.dispatch(new AuthActions.Logout());
   }
 
   isUrlEqualTo(url: string): boolean {
