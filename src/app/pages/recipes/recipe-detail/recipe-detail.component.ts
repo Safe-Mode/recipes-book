@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { Recipe } from '../../../shared/models/recipe.model';
@@ -8,6 +9,7 @@ import { ShoppingListService } from '../../../services/shopping-list.service';
 import { RecipeService } from '../../../services/recipe.service';
 import * as ShoppingListActions from '../../../store/shopping-list/shopping-list.actions';
 import * as fromApp from '../../../store/app.reducer';
+import * as fromRecipes from '../../../store/recipes/recipes.reducer';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -27,15 +29,32 @@ export class RecipeDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe((params: Params) => {
-      this.recipeId = params.get('id');
-      this.recipe = this.recipeService.getRecipe(this.recipeId);
-    });
+    // Managing state via service
+    // this.route.paramMap.subscribe((params: Params) => {
+    //   this.recipeId = params.get('id');
+    //   this.recipe = this.recipeService.getRecipe(this.recipeId);
+    // });
+
+    // managing state via ngRx
+    this.route.paramMap
+      .pipe(
+        switchMap((params: Params) => {
+          this.recipeId = params.get('id');
+          return this.store.select('recipes');
+        }),
+        map((state: fromRecipes.State) => {
+          return state.recipes.find((recipe: Recipe, index: number) => index === +this.recipeId);
+        })
+      )
+      .subscribe((recipe: Recipe) => {
+        this.recipe = recipe;
+      });
   }
 
   onAddIngredientsToShoppingList(event: Event): void {
     event.preventDefault();
 
+    // TODO: integrate to ngRx state management
     const shoppingListIngredients = this.shoppingListService.getIngredients();
     const clonedIngredients = this.recipe.ingredients.slice();
 
