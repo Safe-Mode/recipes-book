@@ -14,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
 import * as fromApp from './store/app.reducer';
 import { AuthEffects } from './store/auth/auth.effects';
+import { RecipesEffects } from './store/recipes/recipes.effects';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,10 @@ import { AuthEffects } from './store/auth/auth.effects';
     HttpClientModule,
     AppRoutingModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      RecipesEffects
+    ]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production // Restrict extension to log-only mode
     }),

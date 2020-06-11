@@ -57,12 +57,7 @@ export class AuthService {
     const expDateStamp = new Date().getTime() + +expiresIn * MS_PER_SEC;
     const user = new User(email, localId, idToken, new Date(expDateStamp));
 
-    // Managing state via rxjs
-    // this.user$.next(user);
-
-    // Managing state via ngRx
-    this.store.dispatch(new AuthActions.AuthSuccess({ localId, email, idToken, expiresIn: new Date(expDateStamp) }));
-
+    this.user$.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
     this.autoLogOut(expDateStamp);
   }
@@ -112,17 +107,7 @@ export class AuthService {
     if (user.token) {
       const expDurationStamp = expDate.getTime() - new Date().getTime();
 
-      // Managing state via rxjs
-      // this.user$.next(user);
-
-      // Managing state via ngRx
-      this.store.dispatch(new AuthActions.AuthSuccess({
-        idToken: userData._token,
-        email: userData.email,
-        localId: userData.id,
-        expiresIn: expDate
-      }));
-
+      this.user$.next(user);
       this.autoLogOut(expDurationStamp);
     }
   }

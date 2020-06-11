@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import * as fromApp from '../../store/app.reducer';
 import * as fromAuth from '../../store/auth/auth.reducer';
 import * as AuthActions from '../../store/auth/auth.actions';
+import * as RecipesActions from '../../store/recipes/recipes.actions';
 
 @Component({
   selector: 'app-header',
@@ -60,9 +61,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onFetchData(event: Event): void {
     event.preventDefault();
 
-    this.dataStorageService
-      .fetchRecipes()
-      .subscribe();
+    // Managing state via service
+    // this.dataStorageService
+    //   .fetchRecipes()
+    //   .subscribe();
+
+    // Manging state via ngRx
+    this.store.dispatch(new RecipesActions.FetchRecipes());
 
     this.dataStorageService
       .fetchIngredients()
