@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 
@@ -9,6 +9,7 @@ import { Recipe } from '../shared/models/recipe.model';
 import { DataStorageService } from '../shared/data-storage.service';
 import { RecipeService } from './recipe.service';
 import * as fromApp from './../store/app.reducer';
+import * as fromRecipes from './../store/recipes/recipes.reducer';
 import * as RecipesActions from './../store/recipes/recipes.actions';
 
 @Injectable({
@@ -29,12 +30,24 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
     // return (recipes.length) ? recipes : this.dataStorageService.fetchRecipes();
 
     // Managing state via ngRx
-    this.store.dispatch(new RecipesActions.FetchRecipes());
+    return this.store
+      .select('recipes')
+      .pipe(
+        take(1),
+        map((state: fromRecipes.State) => state.recipes),
+        switchMap((recipes: Recipe[]) => {
+          if (recipes.length) {
+            return of(recipes);
+          } else {
+            this.store.dispatch(new RecipesActions.FetchRecipes());
 
-    return this.actions$.pipe(
-      ofType(RecipesActions.SET_RECIPES),
-      take(1)
-    );
+            return this.actions$.pipe(
+              ofType(RecipesActions.SET_RECIPES),
+              take(1)
+            );
+          }
+        })
+      );
   }
 
 }

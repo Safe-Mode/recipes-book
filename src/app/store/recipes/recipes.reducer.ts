@@ -16,6 +16,27 @@ export function RecipesReducer(state: State = initialState, action: RecipesActio
         ...state,
         recipes: [...action.payload]
       };
+    case RecipesActions.ADD_RECIPE:
+      return {
+        ...state,
+        recipes: [...state.recipes, action.payload]
+      };
+    case RecipesActions.EDIT_RECIPE:
+      const { id, recipe } = action.payload;
+      const recipes = [...state.recipes];
+
+      recipes[+id] = { ...recipe };
+
+      return {
+        ...state,
+        recipes
+      };
+
+    case RecipesActions.DELETE_RECIPE:
+      return {
+        ...state,
+        recipes: state.recipes.filter((it: Recipe, index: number) => index !== +action.payload)
+      };
     default:
       return state;
   }

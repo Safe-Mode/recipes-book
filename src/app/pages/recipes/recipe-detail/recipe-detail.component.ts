@@ -8,6 +8,7 @@ import { Ingredient } from '../../../shared/models/ingredient.model';
 import { ShoppingListService } from '../../../services/shopping-list.service';
 import { RecipeService } from '../../../services/recipe.service';
 import * as ShoppingListActions from '../../../store/shopping-list/shopping-list.actions';
+import * as RecipesActions from '../../../store/recipes/recipes.actions';
 import * as fromApp from '../../../store/app.reducer';
 import * as fromRecipes from '../../../store/recipes/recipes.reducer';
 
@@ -81,7 +82,12 @@ export class RecipeDetailComponent implements OnInit {
   onDeleteRecipe(event: Event): void {
     event.preventDefault();
 
-    this.recipeService.deleteRecipe(this.recipeId);
+    // Managing state via service
+    // this.recipeService.deleteRecipe(this.recipeId);
+
+    // Managing state via ngRx
+    this.store.dispatch(new RecipesActions.DeleteRecipe(this.recipeId));
+
     this.router.navigate(['/recipes']);
   }
 
