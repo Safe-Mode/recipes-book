@@ -54,8 +54,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onSaveData(event: Event): void {
     event.preventDefault();
 
-    this.dataStorageService.storeRecipes();
-    this.dataStorageService.storeIngredients();
+    // Managing state via service
+    // this.dataStorageService.storeRecipes();
+    // this.dataStorageService.storeIngredients();
+
+    // Managing state via ngRx
+    this.store.dispatch(new RecipesActions.StoreRecipes());
   }
 
   onFetchData(event: Event): void {
