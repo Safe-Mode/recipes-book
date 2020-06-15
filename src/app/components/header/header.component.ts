@@ -11,6 +11,7 @@ import * as fromApp from '../../store/app.reducer';
 import * as fromAuth from '../../store/auth/auth.reducer';
 import * as AuthActions from '../../store/auth/auth.actions';
 import * as RecipesActions from '../../store/recipes/recipes.actions';
+import * as ShoppingListActions from '../../store/shopping-list/shopping-list.actions';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,7 @@ import * as RecipesActions from '../../store/recipes/recipes.actions';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  private userSub$: Subscription;
+  private user$: Subscription;
   isAuthenticated = false;
 
   constructor(
@@ -37,7 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // });
 
     // Managing state via ngRx
-    this.userSub$ = this.store
+    this.user$ = this.store
       .select('auth')
       .pipe(
         map((authState: fromAuth.State) => authState.user)
@@ -48,7 +49,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSub$.unsubscribe();
+    this.user$.unsubscribe();
   }
 
   onSaveData(event: Event): void {
@@ -60,6 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     // Managing state via ngRx
     this.store.dispatch(new RecipesActions.StoreRecipes());
+    this.store.dispatch(new ShoppingListActions.StoreIngredients());
   }
 
   onFetchData(event: Event): void {
@@ -69,13 +71,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.dataStorageService
     //   .fetchRecipes()
     //   .subscribe();
+    //
+    // this.dataStorageService
+    //   .fetchIngredients()
+    //   .subscribe();
 
     // Manging state via ngRx
     this.store.dispatch(new RecipesActions.FetchRecipes());
-
-    this.dataStorageService
-      .fetchIngredients()
-      .subscribe();
+    this.store.dispatch(new ShoppingListActions.FetchIngredients());
   }
 
   onLogOut(event: Event): void {

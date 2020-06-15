@@ -12,9 +12,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
-import * as fromApp from './store/app.reducer';
 import { AuthEffects } from './store/auth/auth.effects';
 import { RecipesEffects } from './store/recipes/recipes.effects';
+import { ShoppingListEffects } from './store/shopping-list/shopping-list.effects';
+import * as fromApp from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RecipesEffects } from './store/recipes/recipes.effects';
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([
       AuthEffects,
-      RecipesEffects
+      RecipesEffects,
+      ShoppingListEffects
     ]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production // Restrict extension to log-only mode

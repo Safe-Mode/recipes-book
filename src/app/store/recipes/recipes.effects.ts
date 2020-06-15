@@ -1,15 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
-import { Action, State, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
 import { BASE_URL_TOKEN } from '../../config';
 import { Recipe } from '../../shared/models/recipe.model';
 import * as RecipesActions from './recipes.actions';
-import * as fromRecipes from './recipes.reducer';
 import * as fromApp from './../app.reducer';
-import { ObservedValueOf, OperatorFunction } from 'rxjs/src/internal/types';
 
 @Injectable()
 export class RecipesEffects {

@@ -19,7 +19,7 @@ import * as RecipesActions from '../../../store/recipes/recipes.actions';
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
 
-  storeSub: Subscription;
+  store$: Subscription;
   editMode = false;
   recipeId: string;
   recipeForm: FormGroup;
@@ -46,8 +46,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.storeSub) {
-      this.storeSub.unsubscribe();
+    if (this.store$) {
+      this.store$.unsubscribe();
     }
   }
 
@@ -60,7 +60,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     // Managing state via ngRx
     if (this.editMode) {
-      this.storeSub = this.store
+      this.store$ = this.store
         .select('recipes')
         .pipe(
           map(({ recipes }: fromRecipes.State) => {
@@ -90,6 +90,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         imagePath: new FormControl(''),
         ingredients: new FormArray([], required)
       });
+
+      this.addIngredient(null);
     }
   }
 

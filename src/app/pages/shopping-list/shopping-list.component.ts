@@ -16,7 +16,7 @@ import * as fromApp from '../../store/app.reducer';
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
-  private shoppingListChangedSub: Subscription;
+  private shoppingList$: Subscription;
   ingredients: Ingredient[];
 
   constructor(
@@ -27,22 +27,22 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Managing state via ngRx
-    this.shoppingListChangedSub = this.store
-      .select('shoppingList')
-      .subscribe(({ ingredients }: fromShoppingList.State) => {
-        this.ingredients = ingredients;
-      });
-
     // Managing state via rxjs
     // this.shoppingListChangedSub = this.shoppingListService.ingredientsChanged$
     //   .subscribe((ingredients: Ingredient[]) => {
     //     this.ingredients = ingredients;
     //   });
+
+    // Managing state via ngRx
+    this.shoppingList$ = this.store
+      .select('shoppingList')
+      .subscribe(({ ingredients }: fromShoppingList.State) => {
+        this.ingredients = ingredients;
+      });
   }
 
   ngOnDestroy(): void {
-    this.shoppingListChangedSub.unsubscribe();
+    this.shoppingList$.unsubscribe();
   }
 
   onEditIngredient(index: number): void {

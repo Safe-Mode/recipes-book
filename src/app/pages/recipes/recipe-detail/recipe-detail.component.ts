@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
@@ -11,13 +12,16 @@ import * as ShoppingListActions from '../../../store/shopping-list/shopping-list
 import * as RecipesActions from '../../../store/recipes/recipes.actions';
 import * as fromApp from '../../../store/app.reducer';
 import * as fromRecipes from '../../../store/recipes/recipes.reducer';
+import * as fromShoppingList from '../../../store/shopping-list/shopping-list.reducer';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css']
 })
-export class RecipeDetailComponent implements OnInit {
+export class RecipeDetailComponent implements OnInit, OnDestroy {
+  ingredients$: Subscription;
+  ingredients: Ingredient[];
   recipe: Recipe;
   recipeId: string;
 
@@ -52,25 +56,50 @@ export class RecipeDetailComponent implements OnInit {
       });
   }
 
+  ngOnDestroy(): void {
+    if (this.ingredients$) {
+      this.ingredients$.unsubscribe();
+    }
+  }
+
   onAddIngredientsToShoppingList(event: Event): void {
     event.preventDefault();
 
-    // TODO: integrate to ngRx state management
-    const shoppingListIngredients = this.shoppingListService.getIngredients();
-    const clonedIngredients = this.recipe.ingredients.slice();
-
-    shoppingListIngredients.forEach((listIngredient: Ingredient) => {
-      clonedIngredients.forEach((ingredient: Ingredient) => {
-         if (ingredient.name === listIngredient.name) {
-           clonedIngredients.splice(clonedIngredients.indexOf(ingredient), 1);
-         }
-      });
-    });
-
     // Managing state via rxjs
+    // const shoppingListIngredients = this.shoppingListService.getIngredients();
+    //
+    // const clonedIngredients = this.recipe.ingredients.slice();
+    //
+    // shoppingListIngredients.forEach((listIngredient: Ingredient) => {
+    //   clonedIngredients.forEach((ingredient: Ingredient) => {
+    //     if (ingredient.name === listIngredient.name) {
+    //       clonedIngredients.splice(clonedIngredients.indexOf(ingredient), 1);
+    //     }
+    //   });
+    // });
+    //
     // this.shoppingListService.addIngredients(clonedIngredients);
 
     // Managing state via ngRx
+    this.ingredients$ = this.store
+      .select('shoppingList')
+      .pipe(
+        map(({ ingredients }: fromShoppingList.State) => ingredients)
+      )
+      .subscribe((ingredients: Ingredient[]) => {
+        this.ingredients = ingredients;
+      });
+
+    const clonedIngredients = this.recipe.ingredients.slice();
+
+    this.ingredients.forEach((listIngredient: Ingredient) => {
+      clonedIngredients.forEach((ingredient: Ingredient) => {
+        if (ingredient.name === listIngredient.name) {
+          clonedIngredients.splice(clonedIngredients.indexOf(ingredient), 1);
+        }
+      });
+    });
+
     this.store.dispatch(new ShoppingListActions.AddIngredients(clonedIngredients));
   }
 
