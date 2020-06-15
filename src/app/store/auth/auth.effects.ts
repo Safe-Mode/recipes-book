@@ -3,12 +3,16 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
 import { API_KEY_TOKEN, AUTH_URL_TOKEN } from '../../config';
 import { User } from '../../models/user.model';
 import { AuthResponseData, AuthService } from '../../services/auth.service';
 import * as AuthActions from './auth.actions';
+import * as RecipesActions from '../recipes/recipes.actions';
+import * as ShoppingListActions from '../shopping-list/shopping-list.actions';
+import * as fromApp from '../app.reducer';
 
 enum ErrorMessage {
   EMAIL_EXISTS = 'This email is already exists',
@@ -73,6 +77,8 @@ export class AuthEffects {
     tap((action: AuthActions.AuthSuccess) => {
       if (action.payload.redirect) {
         this.router.navigate(['/']);
+        this.store.dispatch(new RecipesActions.FetchRecipes());
+        this.store.dispatch(new ShoppingListActions.FetchIngredients());
       }
     })
   );
@@ -117,7 +123,8 @@ export class AuthEffects {
     private actions$: Actions,
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<fromApp.AppState>
   ) {
   }
 
