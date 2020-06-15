@@ -2,12 +2,15 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { BASE_URL_TOKEN } from '../config';
 import { Recipe } from './models/recipe.model';
 import { Ingredient } from './models/ingredient.model';
 import { RecipeService } from '../services/recipe.service';
 import { ShoppingListService } from '../services/shopping-list.service';
+import * as fromApp from '../store/app.reducer';
+import * as RecipesActions from '../store/recipes/recipes.actions';
 
 // TODO: refactor through interceptor
 @Injectable({
@@ -19,7 +22,8 @@ export class DataStorageService {
     @Inject(BASE_URL_TOKEN) private baseUrl: string,
     private http: HttpClient,
     private recipeService: RecipeService,
-    private shoppingListService: ShoppingListService
+    private shoppingListService: ShoppingListService,
+    private store: Store<fromApp.AppState>
   ) { }
 
   storeRecipes(): void {
@@ -53,7 +57,11 @@ export class DataStorageService {
           });
         }),
         tap((recipes: Recipe[]) => {
-          this.recipeService.setRecipes(recipes);
+          // Managing state via service
+          // this.recipeService.setRecipes(recipes);
+
+          // Managing state via ngRx
+          this.store.dispatch(new RecipesActions.SetRecipes(recipes));
         })
       );
   }

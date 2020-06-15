@@ -3,9 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { API_KEY_TOKEN, AUTH_URL_TOKEN } from '../config';
 import { User } from '../models/user.model';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from '../store/auth/auth.actions';
 
 const MS_PER_SEC = 1000;
 
@@ -39,7 +42,8 @@ export class AuthService {
     @Inject(API_KEY_TOKEN)
     private apiKey: string,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private store: Store<fromApp.AppState>
   ) {
   }
 
@@ -112,4 +116,18 @@ export class AuthService {
     this.userExpTimer = setTimeout(() => this.logOutUser(), expDateStamp);
   }
 
+  /* For managing state via ngRx */
+
+  setLogoutTimer(expDateStamp: number): void {
+    this.userExpTimer = setTimeout(() => {
+      this.store.dispatch(new AuthActions.Logout());
+    }, expDateStamp);
+  }
+
+  clearLogoutTimer(): void {
+    if (this.userExpTimer) {
+      clearTimeout(this.userExpTimer);
+      this.userExpTimer = null;
+    }
+  }
 }
