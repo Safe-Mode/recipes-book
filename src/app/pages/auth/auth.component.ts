@@ -18,7 +18,7 @@ import * as AuthActions from '../../store/auth/auth.actions';
 })
 export class AuthComponent implements OnInit, OnDestroy {
 
-  @ViewChild(DynamicCmpHostDirective, { static: false }) modalHost;
+  @ViewChild(DynamicCmpHostDirective) modalHost;
 
   private closeSub: Subscription;
 
