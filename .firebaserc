@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "recipes-book-a7c90"
+  },
+  "targets": {
+    "recipes-book-a7c90": {
+      "hosting": {
+        "recipes-book": [
+          "recipes-book-a7c90"
+        ]
+      }
+    }
   }
 }
