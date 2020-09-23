@@ -15,9 +15,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: RecipeEmptyComponent },
-      { path: 'new', component: RecipeEditComponent },
-      { path: ':id', component: RecipeDetailComponent, resolve: [RecipesResolverService] },
-      { path: ':id/edit', component: RecipeEditComponent, resolve: [RecipesResolverService] }
+      { path: 'new', component: RecipeEditComponent, data: { animation: 'NewRecipe' } },
+      { path: ':id', component: RecipeDetailComponent, resolve: [RecipesResolverService], data: { animation: 'Recipe' } },
+      { path: ':id/edit', component: RecipeEditComponent, resolve: [RecipesResolverService], data: { animation: 'EditRecipe' } }
     ]
   }
 ];

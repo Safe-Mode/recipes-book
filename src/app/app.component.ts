@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 
 import { User } from './models/user.model';
 import { AuthService } from './services/auth.service';
+import { AnimationsService } from './services/animations.service';
 import * as AuthActions from './store/auth/auth.actions';
 import * as RecipesActions from './store/recipes/recipes.actions';
 import * as ShoppingListActions from './store/shopping-list/shopping-list.actions';
@@ -38,7 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID)
     private platformId: object,
     private authService: AuthService,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private animations: AnimationsService
   ) {
   }
 
@@ -71,7 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   prepareRoute(outlet: RouterOutlet): boolean {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+    return this.animations.prepareRoute(outlet);
   }
 
 }
