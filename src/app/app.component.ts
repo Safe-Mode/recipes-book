@@ -1,7 +1,7 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { animate, animateChild, group, query, style, transition, trigger } from '@angular/animations';
+import { transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -13,6 +13,7 @@ import * as RecipesActions from './store/recipes/recipes.actions';
 import * as ShoppingListActions from './store/shopping-list/shopping-list.actions';
 import * as fromApp from './store/app.reducer';
 import * as fromAuth from './store/auth/auth.reducer';
+import * as Animation from './animations';
 
 @Component({
   selector: 'app-root',
@@ -20,46 +21,16 @@ import * as fromAuth from './store/auth/auth.reducer';
   styleUrls: ['./app.component.css'],
   animations: [
     trigger('routeAnimations', [
-      transition('Recipes <=> ShoppingList', [
-        style({ position: 'relative' }),
-        query(':enter, :leave', [
-          style({
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            paddingLeft: '15px',
-            paddingRight: '15px'
-          })
-        ]),
-        query(':enter', [
-          style({
-            left: '-100%',
-            opacity: 0
-          })
-        ]),
-        query(':leave', animateChild()),
-        group([
-          query(':leave', [
-            animate('400ms ease-in', style({
-              left: '100%',
-              opacity: 0
-            }))
-          ]),
-          query(':enter', [
-            animate('400ms ease-in', style({
-              left: '0%',
-              opacity: 1
-            }))
-          ])
-        ]),
-        query(':enter', animateChild()),
-      ])
+      transition('Recipes => ShoppingList', Animation.slide()),
+      transition('ShoppingList => Recipes', Animation.slide(true)),
+      transition('Auth => *', Animation.slide(true)),
+      transition('* => Auth', Animation.slide())
     ])
   ]
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  @ViewChild('outlet', { static: true }) routerOutlet: RouterOutlet;
   private user$: Subscription;
   isAuthenticated = false;
 
