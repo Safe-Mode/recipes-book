@@ -50,9 +50,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Managing state via ngRx
     // TODO: find out should it be here or not
-    if (isPlatformBrowser(this.platformId)) {
-      this.store.dispatch(new AuthActions.AutoLogin());
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.store.dispatch(new AuthActions.AutoLogin());
+    // }
 
     this.user$ = this.store
       .select('auth')

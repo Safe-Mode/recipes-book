@@ -16,13 +16,11 @@ import * as Animation from './../../animations';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css'],
   animations: [
-    trigger('listAnimations', Animation.slideList()),
     trigger('inputAnimations', Animation.slideListItem())
   ]
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
-  @HostBinding('@listAnimations') animateList = true;
   private shoppingList$: Subscription;
   ingredients: Ingredient[];
 
