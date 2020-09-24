@@ -1,24 +1,37 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { User } from './models/user.model';
 import { AuthService } from './services/auth.service';
+import { AnimationsService } from './services/animations.service';
 import * as AuthActions from './store/auth/auth.actions';
 import * as RecipesActions from './store/recipes/recipes.actions';
 import * as ShoppingListActions from './store/shopping-list/shopping-list.actions';
 import * as fromApp from './store/app.reducer';
 import * as fromAuth from './store/auth/auth.reducer';
+import * as Animation from './animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('routeAnimations', [
+      transition('Recipes => ShoppingList', Animation.slide()),
+      transition('ShoppingList => Recipes', Animation.slide(true)),
+      transition('Auth => *', Animation.slide(true)),
+      transition('* => Auth', Animation.slide())
+    ])
+  ]
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  @ViewChild('outlet', { static: true }) routerOutlet: RouterOutlet;
   private user$: Subscription;
   isAuthenticated = false;
 
@@ -26,7 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID)
     private platformId: object,
     private authService: AuthService,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private animations: AnimationsService
   ) {
   }
 
@@ -56,6 +70,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.user$.unsubscribe();
+  }
+
+  prepareRoute(outlet: RouterOutlet): boolean {
+    return this.animations.prepareRoute(outlet);
   }
 
 }

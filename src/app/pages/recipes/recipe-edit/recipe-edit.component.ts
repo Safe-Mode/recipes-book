@@ -11,11 +11,16 @@ import { RecipeService } from '../../../services/recipe.service';
 import * as fromApp from '../../../store/app.reducer';
 import * as fromRecipes from '../../../store/recipes/recipes.reducer';
 import * as RecipesActions from '../../../store/recipes/recipes.actions';
+import { trigger } from '@angular/animations';
+import * as Animation from '../../../animations';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.css']
+  styleUrls: ['./recipe-edit.component.css'],
+  animations: [
+    trigger('inputAnimations', Animation.slideListItem())
+  ]
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
 

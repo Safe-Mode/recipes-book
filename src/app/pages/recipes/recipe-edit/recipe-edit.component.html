@@ -88,6 +88,7 @@
         class="form-row"
         *ngFor="let ingredientCtrl of ingredientsControls; index as i"
         [formArrayName]="i"
+        [@inputAnimations]
       >
         <div class="col-8 form-group">
           <label class="sr-only" [for]="'ingredient-name-' + i">Ingredient#{{ i + 1 }} name</label>
