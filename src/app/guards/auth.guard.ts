@@ -8,6 +8,7 @@ import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import * as fromApp from '../store/app.reducer';
 import * as fromAuth from '../store/auth/auth.reducer';
+import * as AuthActions from '../store/auth/auth.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +27,13 @@ export class AuthGuard implements CanActivate {
     // return this.authService.user$.pipe(
     //   take(1),
     //   map((user: User) => {
-    //     // TODO: enhance functionality for 'auth' page against valid user
     //     return (user) ? true : this.router.createUrlTree(['/auth']);
     //   })
     // );
 
     // Managing state via ngRx
+    this.store.dispatch(new AuthActions.AutoLogin());
+
     return this.store
       .select('auth')
       .pipe(
