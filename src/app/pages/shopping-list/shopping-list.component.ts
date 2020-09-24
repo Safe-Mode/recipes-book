@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -8,14 +9,20 @@ import { DataStorageService } from '../../shared/data-storage.service';
 import * as fromShoppingList from '../../store/shopping-list/shopping-list.reducer';
 import * as ShoppingListActions from '../../store/shopping-list/shopping-list.actions';
 import * as fromApp from '../../store/app.reducer';
+import * as Animation from './../../animations';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  styleUrls: ['./shopping-list.component.css'],
+  animations: [
+    trigger('listAnimations', Animation.slideList()),
+    trigger('inputAnimations', Animation.slideListItem())
+  ]
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
+  @HostBinding('@listAnimations') animateList = true;
   private shoppingList$: Subscription;
   ingredients: Ingredient[];
 

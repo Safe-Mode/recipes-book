@@ -8,6 +8,7 @@
         class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
         *ngFor="let ingredient of ingredients; index as i"
         (click)="onEditIngredient(i)"
+        [@inputAnimations]
       >
         {{ ingredient.name }}
         <span class="badge badge-light p-1">{{ ingredient.amount }}</span>

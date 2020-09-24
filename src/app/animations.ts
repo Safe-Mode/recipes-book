@@ -1,9 +1,22 @@
-import { animate, animateChild, animation, group, query, sequence, style } from '@angular/animations';
+import {
+  animate,
+  animateChild,
+  animation,
+  group,
+  query,
+  sequence,
+  stagger,
+  style,
+  transition
+} from '@angular/animations';
 
 enum Duration {
-  slide = 400,
-  fade = 200
+  SLIDE_ROUTE = 400,
+  SLIDE_LIST = 200,
+  FADE = 200
 }
+
+const LIST_CURVE = 'cubic-bezier(0.35, 0, 0.25, 1)';
 
 const baseRouteAnimationSteps = [
   style({ position: 'relative' }),
@@ -33,13 +46,13 @@ export const slide = (isBackward?) => {
     query(':leave', animateChild(), { optional: true }),
     group([
       query(':leave', [
-        animate(`${Duration.slide}ms ease-in`, style({
+        animate(`${Duration.SLIDE_ROUTE}ms ease-in`, style({
           left: `${-shift}%`,
           opacity: 0
         }))
       ], { optional: true }),
       query(':enter', [
-        animate(`${Duration.slide}ms ease-in`, style({
+        animate(`${Duration.SLIDE_ROUTE}ms ease-in`, style({
           left: '0%',
           opacity: 1
         }))
@@ -59,15 +72,66 @@ export const fade = animation([
   query(':leave', animateChild(), { optional: true }),
   sequence([
     query(':leave', [
-      animate(`${Duration.fade}ms ease-in`, style({
+      animate(`${Duration.FADE}ms ease-in`, style({
         opacity: 0
       }))
     ], { optional: true }),
     query(':enter', [
-      animate(`${Duration.fade}ms ease-in`, style({
+      animate(`${Duration.FADE}ms ease-in`, style({
         opacity: 1
       }))
     ], { optional: true })
   ]),
   query(':enter', animateChild(), { optional: true })
 ]);
+
+export const slideListItem = (shift = 100) => {
+  return [
+    transition(':enter', [
+      style({
+        height: 0,
+        opacity: 0,
+        transform: `translate(${shift}px)`
+      }),
+      sequence([
+        animate(Duration.SLIDE_LIST, style({
+          height: '*',
+        })),
+        animate(Duration.SLIDE_LIST, style({
+          opacity: '*',
+          transform: 'none'
+        }))
+      ])
+    ]),
+    transition(':leave', [
+      sequence([
+        animate(`${Duration.SLIDE_LIST}ms ${LIST_CURVE}`, style({
+          opacity: '0',
+          transform: `translate(-${shift}px)`
+        })),
+        animate(`${Duration.SLIDE_LIST}ms ${LIST_CURVE}`, style({
+          height: 0
+        }))
+      ])
+    ])
+  ];
+};
+
+export const slideList = (shift = 100) => {
+  return [
+    transition(':enter', [
+      query('.list-group button', [
+        style({
+          opacity: 0,
+          transform: `translateY(-${shift}px)`
+        }),
+        stagger(30, [
+          animate(`${Duration.SLIDE_ROUTE}ms ${LIST_CURVE}`, style({
+            opacity: 1,
+            transform: 'none'
+          }))
+        ])
+      ], { optional: true })
+    ])
+  ];
+};
