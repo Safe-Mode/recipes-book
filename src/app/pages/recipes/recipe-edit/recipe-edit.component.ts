@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -11,7 +12,6 @@ import { RecipeService } from '../../../services/recipe.service';
 import * as fromApp from '../../../store/app.reducer';
 import * as fromRecipes from '../../../store/recipes/recipes.reducer';
 import * as RecipesActions from '../../../store/recipes/recipes.actions';
-import { trigger } from '@angular/animations';
 import * as Animation from '../../../animations';
 
 @Component({

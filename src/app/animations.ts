@@ -120,7 +120,7 @@ export const slideListItem = (shift = 100) => {
 export const slideList = (shift = 100) => {
   return [
     transition(':enter', [
-      query('.list-group button', [
+      query('.list-group > *', [
         style({
           opacity: 0,
           transform: `translateY(-${shift}px)`

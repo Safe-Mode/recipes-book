@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import * as fromApp from '../store/app.reducer';
 import * as fromAuth from '../store/auth/auth.reducer';
+import * as AuthActions from '../store/auth/auth.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,8 @@ export class NotAuthGuard implements CanActivate {
     // );
 
     // Managing state via ngRx
+    this.store.dispatch(new AuthActions.AutoLogin());
+
     return this.store
       .select('auth')
       .pipe(
