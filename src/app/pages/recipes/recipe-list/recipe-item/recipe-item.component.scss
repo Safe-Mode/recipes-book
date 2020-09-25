@@ -1,0 +1,20 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+.recipe {
+  h4 {
+    @media (max-width: map-get($grid-breakpoints, "xl")) {
+      font-size: 1.2rem;
+    }
+  }
+
+  p {
+    @media (max-width: map-get($grid-breakpoints, "xl")) {
+      font-size: 0.9rem;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

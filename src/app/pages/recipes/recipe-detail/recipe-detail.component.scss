@@ -1,0 +1,8 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+.detail__title {
+  @media (max-width: map-get($grid-breakpoints, "xl")) {
+    font-size: 2rem;
+  }
+}
