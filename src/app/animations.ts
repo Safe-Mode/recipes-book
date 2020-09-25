@@ -135,3 +135,21 @@ export const slideList = (shift = 100) => {
     ])
   ];
 };
+
+export const slideDropdown = () => {
+  return [
+    transition(':enter', [
+      style({
+        height: 0
+      }),
+      animate(Duration.SLIDE_LIST, style({
+        height: '*'
+      }))
+    ]),
+    transition(':leave', [
+      animate(`${Duration.SLIDE_LIST}ms ${LIST_CURVE}`, style({
+        height: 0
+      }))
+    ])
+  ];
+};

@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
