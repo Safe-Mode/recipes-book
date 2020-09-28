@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CanActivate, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -16,6 +17,8 @@ import * as AuthActions from '../store/auth/auth.actions';
 export class AuthGuard implements CanActivate {
 
   constructor(
+    @Inject(PLATFORM_ID)
+    private platformId: object,
     private authService: AuthService,
     private router: Router,
     private store: Store<fromApp.AppState>
@@ -32,7 +35,9 @@ export class AuthGuard implements CanActivate {
     // );
 
     // Managing state via ngRx
-    this.store.dispatch(new AuthActions.AutoLogin());
+    if (isPlatformBrowser(this.platformId)) {
+      this.store.dispatch(new AuthActions.AutoLogin());
+    }
 
     return this.store
       .select('auth')
