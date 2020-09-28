@@ -1,0 +1,10 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+.navbar-collapse {
+  overflow: hidden;
+
+  @media (min-width: map-get($grid-breakpoints, "lg")) {
+    overflow: initial;
+  }
+}
