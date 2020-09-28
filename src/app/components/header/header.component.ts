@@ -21,7 +21,7 @@ const SCREEN_WIDTH_LG = 992;
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  styleUrls: ['./header.component.scss'],
   animations: [
     trigger('navAnimations', Animation.slideDropdown())
   ]
