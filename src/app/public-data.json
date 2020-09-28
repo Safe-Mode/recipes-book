@@ -1,0 +1,18 @@
+{
+  "features": [{
+    "image": "feature-1.jpg",
+    "text": "Find all the recipes and tips from Jamie's brand new TV show Keep Cooking Family Favourites here"
+  }, {
+    "image": "feature-2.jpg",
+    "text": "Start as you mean to go on with our selection of student recipes, videos and tips"
+  }, {
+    "image": "feature-3.jpg",
+    "text": "Get stuck into Buddy's favourite recipes, perfect for getting kids cooking in the kitchen"
+  }, {
+    "image": "feature-4.jpg",
+    "text": "Need a quick fix for school nights? Check out these mega midweek meals"
+  }, {
+    "image": "feature-5.jpg",
+    "text": "Find out more about our B Corp status and read our new Social Impact Report"
+  }]
+}

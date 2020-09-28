@@ -1,0 +1,27 @@
+<main class="home">
+  <div class="home__banner p-4 mb-5">
+    <p class="home__title">Ready to&nbsp;get creative with Recipe Book</p>
+  </div>
+
+  <section class="home__features features py-4 mb-5">
+    <h2 class="features__title">
+      <span>Get inspired</span>
+      <span class="features__subtitle">Hand-picked bits & bites</span>
+    </h2>
+
+    <ul class="features__list">
+      <li class="features__item" *ngFor="let feature of features; index as i">
+        <img [src]="'/assets/images/' + feature.image" [alt]="'Feature' + i">
+        <p>{{ feature.text }}</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="home__sign-in sign-in jumbotron py-md-5 bg-light">
+    <h2 class="sign-in__title">
+      <span>So, what are you waiting for, yet?!</span>
+      <span class="sign-in__subtitle">Just sign in to store your recipes in the most convenient way</span>
+    </h2>
+    <a href="#" class="sign-in__btn btn btn-success" routerLink="/auth">Sign In now</a>
+  </section>
+</main>
