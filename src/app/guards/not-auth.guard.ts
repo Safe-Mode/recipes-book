@@ -38,7 +38,7 @@ export class NotAuthGuard implements CanActivate {
       .pipe(
         take(1),
         map((authState: fromAuth.State) => {
-          return (authState.user) ? this.router.createUrlTree(['/']) : true;
+          return (authState.user) ? this.router.createUrlTree(['/recipes']) : true;
         })
       );
   }
